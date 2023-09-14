@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스테디오 슬라이드 배너</title>
+  <link rel="stylesheet" href="banner.css">
+</head>
+<body>
+  <section class="container">
+
+    <!-- 이미지 -->
+    <div class = "banner">
+      <div><img src="./banner/4.png"></div>
+      <div><img src="./banner/5.png"></div>
+      <div><img src="./banner/1.png"></div>
+      <div><img src="./banner/2.png"></div>
+      <div><img src="./banner/3.png"></div>
+      <div><img src="./banner/4.png"></div>
+      <div><img src="./banner/5.png"></div>
+      <div><img src="./banner/1.png"></div>
+      <div><img src="./banner/2.png"></div>
+    </div>
+
+    <div class="page-btn-wrap">
+      <div class="page-count-wrap">
+        <span class="now-page">1</span>
+        <span class="page-len">/5</span>
+      </div>
+      <div class="arrow-wrap">
+        <button type="button" class="arrow left prev">
+            <
+        </button>
+        <button type="button" class="arrow right next">
+            >
+        </button>
+      </div>
+    </div>
+
+
+  </section>
+</body>
+
+<script>
+
+  const banner = document.querySelector("div.banner")
+  const nowPage = document.querySelector("span.now-page")
+  const pageLen = document.querySelector("span.page-len")
+  const imgcount = document.querySelectorAll("div img")
+  let count = 1;
+
+  function autoSlide(){
+    banner.style.transition = "transform 0.5s"
+    temp = count;
+    count ++;
+    if(count == 6){
+      banner.style.transform = `translate(-${560*(count+1)-440}px)`;
+      setTimeout(function(){
+        banner.style.transition = "transform 0s"
+        banner.style.transform = `translate(-${560*(2)-440}px)`
+      },500)
+      count = 1;
+    }
+    else{
+      banner.style.transform = `translate(-${560*(count+1)-440}px)`;
+    }
+    nowPage.innerHTML = `${count}`
+    pageLen.innerHTML = `/${imgcount.length-4}`
+    imgcount.forEach((v,i,imgArr)=>{
+      if(count==(i-1)||temp==((i-2))){v.style.opacity="1"}
+      else{
+        v.style.opacity="0.3"
+    }})
+  }
+  
+  const prevFirstDiv = document.createElement("div")
+  const firstDiv = document.createElement("div")
+  const prevlastDiv = document.createElement("div")
+  const lastDiv = document.createElement("div")
+  const buttons = document.querySelectorAll("button")
+  const arrows = document.querySelectorAll("button.arrow")
+
+  imgcount.forEach((v,i)=>{
+          if(count==(i-1)){v.style.opacity="1"}})
+  
+
+  banner.style.transform = "translate(-680px)";
+
+  let inter = setInterval(autoSlide, 3000)
+
+  // 앞 뒤 버튼
+  let arrowsButtonCheck = true;
+  arrows.forEach((arrow)=>{
+    arrow.addEventListener("click",(e)=>{
+      if(arrowsButtonCheck){
+        temp = count;
+        console.log(count)
+        arrowsButtonCheck = false;
+        clearInterval(inter);
+        banner.style.transition = "transform 0.5s"
+        let arrowType = arrow.classList[2];
+        if(arrowType == "prev"){
+         count--;
+         if(count == 0){
+            banner.style.transform = `translate(-${560*(count+1)-440}px)`;
+            setTimeout(function(){
+                banner.style.transition = "transform 0s";
+                banner.style.transform = "translate(-2920px)";
+              }, 500);
+            count = 5;
+          }
+          else{
+            banner.style.transform = `translate(-${560*(count+1)-440}px)`;
+            
+          }
+        }
+        else{
+          count++;
+              if(count == 6) {
+                  banner.style.transform = `translate(-${560*(count+1)-440}px)`;
+                  setTimeout(function(){
+                      banner.style.transition = "transform 0s"
+                      banner.style.transform = "translate(-680px)";
+                  }, 500);
+                  count = 1;
+              }else{
+                  banner.style.transform = `translate(-${560*(count+1)-440}px)`;
+              }
+        }
+        nowPage.innerHTML = `${count}`
+        pageLen.innerHTML = `/${imgcount.length-4}`
+        imgcount.forEach((v,i,imgArr)=>{
+          if(count==(i-1)){
+            v.style.opacity="1"
+          }else{
+            v.style.opacity="0.3"
+          }
+        })
+        inter = setInterval(autoSlide, 3000);
+        setTimeout((v)=>arrowsButtonCheck = true, 500);
+      }
+    })
+  })
+
+
+
+
+</script>
+</html>

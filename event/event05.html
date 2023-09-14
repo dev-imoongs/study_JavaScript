@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>첨부파일 썸네일</title>
+  <style>
+    div.image {
+      background-image: url('./plus.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+    }
+
+    label {
+      display: flex;
+    }
+    div.wrap {
+      margin: 0 auto;
+      display: flex;
+    }
+    button {
+      display: none;
+      width: 20px;
+      height: 20px;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      color:aliceblue;
+      background-color: rgb(0, 0, 0);
+      border-width: 2px;
+      border-color: rgb(0, 0, 0);
+      border-radius: 7px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <label for="attach">
+    <div class="wrap">
+      <div class="image"></div>
+      <button type="button">X</button>
+    </div>
+  </label>
+  <input type="file" id="attach" style="display: none;">
+
+</body>
+<script>
+  // 업로드된 파일은 input 객체의 프로퍼티에 존재한다.
+  const input = document.getElementById("attach");
+  // 사용자가 업로드한 파일에 따라 배경 이미지가 변경되어야 하는 객체
+  const thumbnail = document.querySelector("div.image");
+  // change 이벤트: 해당 객체에 변화가 있을 때(파일이 업로드 되었을 때)
+  const delbutton = document.querySelector("button");
+  input.addEventListener("change", (e) => {
+    console.log("업로드! 😁");
+    // 업로드한 파일을 읽어올 객체
+    const reader = new FileReader();
+
+    // 해당 파일의 정보를 readAsDataURL에 전달하면, 업로드된 파일의 절대경로가 인코딩된다.
+    reader.readAsDataURL(e.target.files[0]);
+
+    // byte 단위로 읽어온 뒤 전부 읽었다면 load 이벤트 발생
+    reader.onload = (e) => {
+      // 이벤트 객체인 e에 파일의 정보들이 있으며,
+      // result에는 절대경로가 base64로 인코딩된 문자열값이 있다.
+      const path = e.target.result;
+      // 항상 result의 시작은 파일의 종류(타입)이기 때문에,
+      // image 문자열이 포함되어 있다면, 이미지 파일이다.
+      if(path.includes('image')){
+        // 인코딩된 파일의 절대 경로를 그대로 url에 전달한다.
+        thumbnail.style.backgroundImage = `url('${path}')`;
+      }else{
+        // 만약 이미지 파일이 아니라면 준비해놓은 이미지 경로를 전달한다.
+        thumbnail.style.backgroundImage = `url('./file.png')`;
+      }
+      delbutton.style.display = 'flex'
+    }
+  });
+
+  // 업로드 후 X버튼을 생성하고,
+  delbutton.addEventListener("click",function(e){
+    input.value =""
+    delbutton.style.display = 'none'
+    if(!input.value){
+      thumbnail.style.backgroundImage = `url('./plus.png')`
+    }
+  })
+  // X버튼 클릭 시 input 객체의 value를 빈 문자열로 초기화하고,
+  // 이미지는 기존 이미지로 변경시킨다.
+
+</script>
+</html>

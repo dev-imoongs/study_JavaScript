@@ -1,0 +1,98 @@
+
+*, :after, :before {
+box-sizing: border-box;
+border: 0 solid #e5e7eb;
+}
+
+section.container {
+    width: 1440px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+div.banner {
+    width: 5040px;
+    height: 336px;
+    /* transform: translate(0px); */
+}
+
+div.banner div {
+    width: 560px;
+    float: left;
+}
+
+div img {
+    width: 550px;
+    opacity: 0.3;
+    border-radius: 16px;
+}
+
+div.buttons {
+  width: 560px;
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+}
+
+div.buttons button {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+
+
+.page-btn-wrap {
+  column-gap: 12px;
+  align-items: center;
+  display: flex;
+  bottom: 30px;
+  left: 480px;
+  position: absolute;
+}
+
+.page-count-wrap {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgba(0,0,0,40%);
+}
+
+.now-page {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+  color: #fff;
+  fill: #fff;
+}
+
+.page-len {
+  color: hsla(0,0%,100%,.8);
+  margin-left: 2px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.arrow-wrap {
+  display: flex;
+  column-gap: 12px;
+}
+
+.arrow {
+  border-radius: 9999px;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  background-color: rgba(0,0,0,40%);
+  cursor: pointer;
+}

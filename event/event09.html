@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fetch</title>
+  <style>
+    h1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      height: 100px;
+    }
+    .content-wrap {
+      display: inline-block;
+      width: 150px;
+      height: auto;
+      margin: 0;
+      padding-right: 20px;
+    }
+    .thumbnail-div {
+      justify-content: center;
+    }
+    p {
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>목록 만들기</h1>
+  </header>
+  <main>
+    <div class = card-menu-wrap>
+    <!-- 1 -->
+      <div class = content-wrap> 
+        <div class = thumbnail-div>
+          <img src="" class = thumbnail>
+        </div>
+        <div class = title-div>
+          <p class = title></p>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+</body>
+<script>
+
+  const img = document.querySelector("img")
+  const p = document.querySelector("p")
+
+  fetch("https://jsonplaceholder.typicode.com/photos")
+  .then((response) => response.json())
+  .then((jsonArray) => jsonArray.slice(0,10).map((v)=>v.thumbnailUrl))
+  .then((thumbnails) =>{img.src = thumbnails[0]})
+
+  fetch("https://jsonplaceholder.typicode.com/photos")
+  .then((response) => response.json())
+  .then((jsonArray) => jsonArray.slice(0,10).map((v)=>v.title))
+  .then((title) =>{p.innerText = title[0]})
+
+
+  // 데이터 중 썸네일을 활용하여 목록을 구성하기
+  // 각 데이터의 title도 출력해주기
+  // 사용자가 요청한 페이지에 맞게 데이터를 출력해준다.
+  // 한 페이지당, 10개씩 출력되며
+  // 3페이지일 경우 21번부터 30번까지 출력되어야 한다.
+
+  
+
+  // 현재 페이지 * 글 개수: limit 20
+  // limit - 현재 페이지 - 1: offset 20-2-1 17
+
+  // 페이지 단위는 5단위
+  // Math.ceil(현재 페이지 / 페이지 단위) * 페이지 단위: endPage
+  // endPage - 페이지 단위 + 1: startPage
+  // Math.ceil(전체 개수 / 페이지 단위): realendpage
+  // 최신순으로 출력
+  // console.log(new Array(10).fill().map((data, i) => i + 1).slice(0, 5))
+</script>
+</html>
+
+

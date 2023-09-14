@@ -1,0 +1,86 @@
+
+<!--  -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>갤러리</title>
+  <style>
+
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    main {
+      width: 100%;
+    }
+    #block {
+      display: flex;
+    }
+    #wrap {
+      display: flex;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+    }
+    .wrap div {
+      display: inline-block;
+      width: 150px;
+      height: auto;
+      margin: 0;
+      padding-right: 20px;
+    }
+    p {
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><strong>Photos</strong></h1>
+  </header>
+  <main>
+    <div class = "block">
+      <div id="wrap" class="wrap"></div>
+    </div>
+  </main>
+  <script>
+    fetch("https://jsonplaceholder.typicode.com/photos")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`response: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((photos) => {
+        if (!photos || photos.length == 0) {
+          throw new Error("none result");
+        }
+        return photos.reverse().map((photo) => {
+          return { thumbnailUrl: photo.thumbnailUrl, title: photo.title};
+        });
+      })
+      .then((arr) => {return arr.slice(0,10)})
+      .then((data) => {
+        const galleryElement = document.getElementById("wrap");
+        data.forEach((item) => {
+          const galleryItem = document.createElement("div");
+          const thumbnailImg = document.createElement("img");
+          const gallerytitle = document.createElement("p");
+          thumbnailImg.src = item.thumbnailUrl;
+          gallerytitle.innerHTML = item.title;
+          // galleryItem.classList.add("wrap-item");
+          galleryItem.append(thumbnailImg);
+          galleryItem.append(gallerytitle);
+          galleryElement.append(galleryItem);
+
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
+  </script>
+</body>
+</html>
